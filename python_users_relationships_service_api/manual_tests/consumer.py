@@ -33,8 +33,8 @@ headers = {
 # conn.request("POST", "/persons", json_data_post, headers=headers)
 
 # conn.request("GET", "/persons/Valentina/friends", headers=headers)
-# conn.request("GET", "/persons/Juan/maybe-you-know", headers=headers)
-# conn.request("DELETE", "/persons/Juan/Valentina", headers=headers)
+# conn.request("GET", "/persons/Erica/maybe-you-know", headers=headers)
+# conn.request("DELETE", "/persons/Erica/Valentina", headers=headers)
 
 # create_person_post = {
 #     'name1': 'Erica',

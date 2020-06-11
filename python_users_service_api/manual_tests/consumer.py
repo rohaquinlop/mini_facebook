@@ -45,6 +45,7 @@ def login():
 headers = login()
 # print(headers)
 
+#conn.request("GET", "/users?id=1?name=blue", headers=headers)
 conn.request("GET", "/users?id=1", headers=headers)
 
 # conn.request("GET", "/ping", headers={'Content-type': 'application/json'})

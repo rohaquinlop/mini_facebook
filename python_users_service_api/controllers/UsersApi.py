@@ -14,16 +14,14 @@ users_api = Blueprint('users_api', __name__)
 
 users_service = UsersService()
 
-@users_api.route('/users/login',
-                 methods = ['POST'])
+@users_api.route('/users/login', methods = ['POST'])
 def login():
     try:
         app.logger.info("in /login")
         json = request.json
         username = json['username']
         password = json['password']
-        user_id = users_service.login(username,
-                                      password)
+        user_id = users_service.login(username, password)
         if user_id is None:
             resp = jsonify({'message': 'incorrect username or password'})
             resp.status_code = 401
@@ -39,14 +37,14 @@ def login():
         resp = jsonify({'message': message})
         resp.status_code = 500
 
-@users_api.route('/users',
-                 methods = ['GET'])
+@users_api.route('/users', methods = ['GET'])
 @jwt_required
 def get_users():
     try:
         app.logger.info("in /users")
         user_id = request.args.get('id', default = None, type = int)
         user_name = request.args.get('name', default = None, type = str)
+        print(user_id)
         if user_id is not None:
             app.logger.info("getting user from cache")
             user = cache_client.get(str(user_id))
@@ -58,9 +56,7 @@ def get_users():
             else:
                 user = users_service.get_user_by_id(user_id)
                 app.logger.info("user does not exist in the cache, creating it.")
-                cache_client.set(str(user_id),
-                                 user,
-                                 expire=20)
+                cache_client.set(str(user_id), user, expire=20)
                 app.logger.info("user: " + str(user))
                 if user is None:
                     resp = jsonify({'message': 'user not found'})
@@ -82,8 +78,7 @@ def get_users():
         resp = jsonify({'message': 'unknown error, please contact the administrator'})
         resp.status_code = 500
 
-@users_api.route('/users/ping',
-                 methods = ['GET'])
+@users_api.route('/users/ping', methods = ['GET'])
 def ping():
     try:
         app.logger.info("in /ping")
